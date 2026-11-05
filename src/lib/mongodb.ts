@@ -3,7 +3,6 @@ import { MongoClient } from "mongodb";
 const uri = process.env.MONGODB_URI as string;
 
 declare global {
-  // eslint-disable-next-line no-var
   var _mongoClient: MongoClient | undefined;
 }
 

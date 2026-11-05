@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { ArrowLeft, BookCheck, User } from "lucide-react";
@@ -22,20 +22,25 @@ export default function BookDetails() {
   const [notFound, setNotFound] = useState(false);
   const [open, setOpen] = useState(false);
 
-  const load = useCallback(async () => {
-    try {
-      const [b, borrows] = await Promise.all([api<Book>(`/books/${id}`, { auth: true }), api<Borrow[]>("/borrows", { auth: true })]);
-      setBook(b);
-      setBorrow(borrows.find((x) => x.bookId === id) ?? null);
-    } catch (err) {
-      if (err instanceof ApiError && (err.status === 404 || err.status === 400)) setNotFound(true);
-      else handleError(err);
-    }
-  }, [id, handleError]);
+  const [refresh, setRefresh] = useState(0);
 
   useEffect(() => {
-    load();
-  }, [load]);
+    let active = true;
+    Promise.all([api<Book>(`/books/${id}`, { auth: true }), api<Borrow[]>("/borrows", { auth: true })])
+      .then(([b, borrows]) => {
+        if (!active) return;
+        setBook(b);
+        setBorrow(borrows.find((x) => x.bookId === id) ?? null);
+      })
+      .catch((err) => {
+        if (!active) return;
+        if (err instanceof ApiError && (err.status === 404 || err.status === 400)) setNotFound(true);
+        else handleError(err);
+      });
+    return () => {
+      active = false;
+    };
+  }, [id, refresh, handleError]);
 
   if (notFound)
     return (
@@ -102,7 +107,7 @@ export default function BookDetails() {
           )}
         </div>
       </div>
-      <BorrowDialog open={open} onOpenChange={setOpen} book={book} user={session.user} onBorrowed={load} />
+      <BorrowDialog open={open} onOpenChange={setOpen} book={book} user={session.user} onBorrowed={() => setRefresh((n) => n + 1)} />
     </div>
   );
 }

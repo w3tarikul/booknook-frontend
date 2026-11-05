@@ -14,6 +14,7 @@ export default function MyBorrows() {
   const handleError = useApiError();
   const [borrows, setBorrows] = useState<Borrow[] | null>(null);
   const [returning, setReturning] = useState<string | null>(null);
+  const [now] = useState(() => Date.now());
 
   useEffect(() => {
     api<Borrow[]>("/borrows", { auth: true }).then(setBorrows).catch(handleError);
@@ -48,7 +49,7 @@ export default function MyBorrows() {
   return (
     <div className="grid gap-4">
       {borrows.map((b) => {
-        const overdue = new Date(b.returnDate).getTime() < Date.now();
+        const overdue = new Date(b.returnDate).getTime() < now;
         return (
           <article key={b._id} className="glass flex flex-col gap-4 rounded-2xl p-4 transition hover:shadow-lg sm:flex-row sm:items-center">
             {/* eslint-disable-next-line @next/next/no-img-element */}

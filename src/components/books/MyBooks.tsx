@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { BookPlus, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
@@ -20,18 +20,16 @@ export default function MyBooks() {
   const [deleting, setDeleting] = useState(false);
   const userId = session?.user.id;
 
-  const load = useCallback(async () => {
-    if (!userId) return;
-    try {
-      setBooks(await api<Book[]>(`/books?ownerId=${userId}`));
-    } catch (err) {
-      handleError(err);
-    }
-  }, [userId, handleError]);
-
   useEffect(() => {
-    load();
-  }, [load]);
+    if (!userId) return;
+    let active = true;
+    api<Book[]>(`/books?ownerId=${userId}`)
+      .then((list) => active && setBooks(list))
+      .catch((err) => active && handleError(err));
+    return () => {
+      active = false;
+    };
+  }, [userId, handleError]);
 
   async function confirmDelete() {
     if (!target) return;
