@@ -5,7 +5,7 @@ import Providers from "@/components/layout/Providers";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
-const inter = Inter({ variable: "--font-sans", subsets: ["latin"] });
+const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: { default: "BookNook | Home", template: "BookNook | %s" },
