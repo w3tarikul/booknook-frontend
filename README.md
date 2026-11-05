@@ -2,7 +2,7 @@
 
 A small online library where readers browse books, add their own, borrow them for a few days and return them.
 
-- **Live site:** _added after deployment_
+- **Live site:** https://booknook-by-tarikul.vercel.app
 - Server repo: [booknook-backend](https://github.com/w3tarikul/booknook-backend)
 
 ## Features
