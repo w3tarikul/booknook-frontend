@@ -128,3 +128,52 @@
     @apply font-sans;
   }
 }
+/* BookNook theme */
+:root {
+  --background: oklch(0.985 0.006 285);
+  --primary: oklch(0.52 0.22 280);
+  --primary-foreground: oklch(0.99 0 0);
+  --ring: oklch(0.6 0.18 280);
+  --accent: oklch(0.95 0.03 285);
+  --accent-foreground: oklch(0.3 0.1 280);
+  --muted-foreground: oklch(0.5 0.02 280);
+  --border: oklch(0.9 0.015 285);
+  --glass-bg: oklch(1 0 0 / 0.62);
+  --glass-border: oklch(1 0 0 / 0.7);
+}
+
+.dark {
+  --background: oklch(0.15 0.02 285);
+  --foreground: oklch(0.96 0.005 285);
+  --card: oklch(0.2 0.025 285);
+  --popover: oklch(0.2 0.025 285);
+  --primary: oklch(0.7 0.17 285);
+  --primary-foreground: oklch(0.15 0.03 285);
+  --accent: oklch(0.28 0.04 285);
+  --accent-foreground: oklch(0.95 0.02 285);
+  --muted-foreground: oklch(0.7 0.02 285);
+  --border: oklch(1 0 0 / 0.1);
+  --glass-bg: oklch(0.25 0.03 285 / 0.55);
+  --glass-border: oklch(1 0 0 / 0.1);
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    background-image:
+      radial-gradient(60rem 30rem at 10% -10%, oklch(0.75 0.15 290 / 0.22), transparent 60%),
+      radial-gradient(50rem 30rem at 100% 0%, oklch(0.8 0.12 220 / 0.18), transparent 60%);
+    background-attachment: fixed;
+  }
+}
+
+.glass {
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: 0 8px 30px oklch(0.3 0.1 280 / 0.08);
+}
