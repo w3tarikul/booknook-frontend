@@ -13,7 +13,7 @@ export async function GET() {
     .setProtectedHeader({ alg: "HS256" })
     .setSubject(session.user.id)
     .setIssuedAt()
-    .setExpirationTime("1h")
+    .setExpirationTime("3d")
     .sign(secret);
   return Response.json({ token });
 }

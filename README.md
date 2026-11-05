@@ -37,7 +37,7 @@ Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, Better Auth, MongoDB,
 ## How it works
 
 - Better Auth stores users and sessions in MongoDB. Route protection is in `src/proxy.ts`.
-- For API calls, `/api/token` checks the session and issues a short-lived JWT (1 hour). The client sends it to the Express server, which verifies it with the shared `JWT_SECRET`.
+- For API calls, `/api/token` checks the session and issues a JWT (3 days). The client sends it to the Express server, which verifies it with the shared `JWT_SECRET`.
 - Cover images are uploaded from the browser to imgbb and the returned URL is saved with the book.
 
 ## Getting started
