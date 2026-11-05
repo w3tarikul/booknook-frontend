@@ -110,7 +110,7 @@ export default function BookForm({ book }: { book?: Book }) {
           ) : (
             <>
               <ImagePlus className="size-8" />
-              <span>Click to upload a cover (max 5 MB)</span>
+              <span>Click to upload a cover (max 4 MB)</span>
             </>
           )}
           {preview && <span className="text-xs">Click to change the image</span>}

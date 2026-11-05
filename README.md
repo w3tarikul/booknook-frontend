@@ -38,7 +38,7 @@ Next.js (App Router), TypeScript, Tailwind CSS, shadcn/ui, Better Auth, MongoDB,
 
 - Better Auth stores users and sessions in MongoDB. Route protection is in `src/proxy.ts`.
 - For API calls, `/api/token` checks the session and issues a JWT (3 days). The client sends it to the Express server, which verifies it with the shared `JWT_SECRET`.
-- Cover images are uploaded from the browser to imgbb and the returned URL is saved with the book.
+- Cover images are sent to `/api/upload`, which checks the session and forwards them to imgbb with a server-only key. The returned URL is saved with the book.
 
 ## Getting started
 
@@ -60,7 +60,7 @@ Run the [server](https://github.com/w3tarikul/booknook-backend) as well, on the 
 | `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET` | Google OAuth credentials. Redirect URI: `<site url>/api/auth/callback/google` |
 | `JWT_SECRET` | Must match the server's `JWT_SECRET` |
 | `NEXT_PUBLIC_API_URL` | URL of the Express server |
-| `NEXT_PUBLIC_IMGBB_KEY` | imgbb API key for cover uploads |
+| `IMGBB_KEY` | imgbb API key (server only) used by `/api/upload` for cover images |
 
 ## Scripts
 
